@@ -3,7 +3,7 @@
     <wen-vant-preview v-model="showPreview" :list="previewList" :config="previewConfig" initial-swipe="1"
       :autoplay="autoplay" :loop="true" :show-indicators="true" @click="previewClick" @change="previewChange"
       ref="wen-vant-preview" :clearable="false" :enable-fullscreen="false" @clear="previewClear"
-      :traceability.sync="traceability">
+      :traceability.sync="traceability" click-close>
       <template v-slot="slotProps">
         <span
           :style="{color: `${slotProps.item.color}`, 'display': 'flex','height': '80%','align-items': 'center','justify-content': 'center', 'background-color': 'cadetblue'}">
@@ -48,6 +48,9 @@ export default {
     setTimeout(() => {
         this.reversespan = 'reversespan'
     }, 5000)
+    document.body.addEventListener('touchmove', function (e) {
+        e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+    }, {passive: false}); //passive 参数不能省略，用来兼容ios和android
   },
   methods: {
     vantClick (event) {
